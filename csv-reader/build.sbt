@@ -4,11 +4,12 @@ version := "0.1"
 
 scalaVersion := "2.12.13"
 
-// https://mvnrepository.com/artifact/org.apache.spark/spark-sql
-libraryDependencies += "org.apache.spark" %% "spark-sql" % "3.1.1"
-// https://mvnrepository.com/artifact/org.apache.spark/spark-core
-libraryDependencies += "org.apache.spark" %% "spark-core" % "3.1.1"
+lazy val commonDependencies = Seq(
+  "org.apache.spark" %% "spark-sql-kafka-0-10" % "3.1.1",
+  "org.apache.spark" %% "spark-core" % "3.1.1",
+  "org.apache.spark" %% "spark-sql" % "3.1.1"
+)
 
+lazy val producer = project.settings(Seq(target := { baseDirectory.value / "producer" }), libraryDependencies ++= commonDependencies)
 
-libraryDependencies += "org.apache.spark" %% "spark-sql-kafka-0-10" % "3.1.1"
-
+lazy val consumer = project.settings(Seq(target := { baseDirectory.value / "consumer" }), libraryDependencies ++= commonDependencies)
