@@ -18,6 +18,8 @@ object ReadCSVFile {
       .appName("CSVReader")
       .getOrCreate()
 
+    
+
     val schema = ScalaReflection.schemaFor[Employee].dataType.asInstanceOf[StructType]
     val csvDF = spark.readStream.option("sep", ",").schema(schema).csv("producer/src/main/resources")
     val csvDS = csvDF.selectExpr("CAST(key AS STRING)", "CAST(value AS STRING)")
